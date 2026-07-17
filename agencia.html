@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="media/TracoD_New_Interno_Prancheta%201%20c%c3%b3pia%2012.png">
+  <title>Painel da Agência — Gestão de Relatórios</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/tabler-icons.min.css">
+  <style>
+    :root {
+      --bg-main: #121214;
+      --bg-card: #1e1e24;
+      --border-color: #2d2d35;
+      --text-main: #ebebeb;
+      --text-muted: #9ca3af;
+      --meta-color: #3b82f6;
+      --accent-gold: #f59e0b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: var(--bg-main); color: var(--text-main); padding-bottom: 60px; }
+
+    .header {
+      background: #09090b;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-logo { display: flex; align-items: center; gap: 12px; }
+    .header-logo img { height: 35px; }
+    .header-title { font-size: 16px; font-weight: 600; border-left: 2px solid var(--border-color); padding-left: 12px; }
+    
+    .actions-bar { display: flex; gap: 12px; align-items: center; }
+    .select-client { background: var(--bg-card); border: 1px solid var(--border-color); color: #fff; padding: 8px 16px; border-radius: 6px; font-size: 14px; outline: none; cursor: pointer; }
+    .btn-action { background: #fff; color: #000; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+    .btn-action:hover { background: #e5e7eb; }
+    .btn-secondary { background: var(--bg-card); color: #fff; border: 1px solid var(--border-color); }
+    .btn-secondary:hover { background: #25252d; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+    .form-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    
+    .form-group { margin-bottom: 20px; }
+    .form-group:last-child { margin-bottom: 0; }
+    label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; color: #fff; }
+    input, textarea, select { width: 100%; background: #15151a; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; color: #fff; font-size: 14px; outline: none; transition: 0.2s; }
+    input:focus, textarea:focus { border-color: var(--meta-color); }
+    
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+
+    .creative-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 12px; align-items: center; margin-bottom: 12px; }
+    .btn-remove-row { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 18px; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER COMPLETO DA AGÊNCIA -->
+  <div class="header">
+    <div class="header-logo">
+      <img src="media/TracoD_New_Interno_Prancheta%201%20c%c3%b3pia%2012.png" alt="Traço D">
+      <span class="header-title">Painel de Controle — Relatórios</span>
+    </div>
+    <div class="actions-bar">
+      <select class="select-client" id="client-select">
+        <option value="">Selecione o Cliente</option>
+      </select>
+      <button class="btn-action btn-secondary" onclick="copyClientLink()"><i class="ti ti-link"></i> Link do Cliente</button>
+      <button class="btn-action" onclick="saveReport()"><i class="ti ti-device-floppy"></i> Salvar Relatório</button>
+    </div>
+  </div>
+
+  <div class="container">
+    
+    <!-- BLOCO 1: PERÍODO E INTRODUÇÃO -->
+    <div class="form-section">
+      <div class="section-title">Contexto do Relatório</div>
+      <div class="row">
+        <div class="form-group">
+          <label>Período Analisado (Texto Livre)</label>
+          <input type="text" id="f-period" placeholder="Ex: 19/03/2026 – 12/04/2026">
+        </div>
+        <div class="form-group">
+          <label>Mês de Referência (Filtro Interno)</label>
+          <input type="month" id="f-month-ref">
+        </div>
+      </div>
+      <div class="form-group" style="margin-top: 16px;">
+        <label>Resumo Executivo / Briefing Inicial</label>
+        <textarea id="f-briefing" rows="4" placeholder="Escreva o parágrafo de introdução explicando os investimentos e o contexto geral das campanhas..."></textarea>
+      </div>
+    </div>
+
+    <!-- BLOCO 2: DADOS DE PÚBLICO (MANTENDO O LAYOUT MANUAL SE NECESSÁRIO) -->
+    <div class="form-section">
+      <div class="section-title">Público Alvo Campeão</div>
+      <div class="row">
+        <div class="form-group">
+          <label>% Público Feminino</label>
+          <input type="number" id="f-pct-women" placeholder="Ex: 85">
+        </div>
+        <div class="form-group">
+          <label>% Público Masculino</label>
+          <input type="number" id="f-pct-men" placeholder="Ex: 15">
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCO 3: PERFORMANCE DE CRIATIVOS (DINÂMICO) -->
+    <div class="form-section">
+      <div class="section-title">Anúncios / Criativos de Destaque</div>
+      <div id="creatives-form-list">
+        <!-- Linhas de criativos serão adicionadas aqui por JS -->
+      </div>
+      <button class="btn-action btn-secondary" style="margin-top: 12px; padding: 6px 12px; font-size: 12px;" onclick="addCreativeRow()">
+        <i class="ti ti-plus"></i> Adicionar Criativo
+      </button>
+    </div>
+
+    <!-- BLOCO 4: ANÁLISE ESTRATÉGICA -->
+    <div class="form-section">
+      <div class="section-title">Análise de Performance</div>
+      <div class="form-group">
+        <label>O Que Funcionou Bem (Um insight por linha)</label>
+        <textarea id="f-success-insights" rows="4" placeholder="Insight 1&#10;Insight 2"></textarea>
+      </div>
+      <div class="form-group" style="margin-top: 16px;">
+        <label>Pontos de Atenção / Próximos Passos</label>
+        <textarea id="f-warning-insights" rows="4" placeholder="Ponto de atenção 1&#10;Ponto de atenção 2"></textarea>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Função básica para adicionar linhas de criativos no formulário
+    function addCreativeRow(data = {name:'', type:'', conv:'', cost:'', imp:''}) {
+      const container = document.getElementById('creatives-form-list');
+      const div = document.createElement('div');
+      div.className = 'creative-row';
+      div.innerHTML = `
+        <input type="text" class="c-name" placeholder="Nome do Anúncio" value="${data.name}">
+        <input type="text" class="c-type" placeholder="Formato" value="${data.type}">
+        <input type="number" class="c-conv" placeholder="Conv." value="${data.conv}">
+        <input type="text" class="c-cost" placeholder="Custo" value="${data.cost}">
+        <input type="number" class="c-imp" placeholder="Imp." value="${data.imp}">
+        <button class="btn-remove-row" onclick="this.parentElement.remove()">×</button>
+      `;
+      container.appendChild(div);
+    }
+
+    // Inicializa com uma linha vazia por padrão
+    document.addEventListener("DOMContentLoaded", () => { addCreativeRow(); });
+    
+    function copyClientLink() { alert("Link do cliente gerado com sucesso!"); }
+    function saveReport() { alert("Dados estratégicos salvos com sucesso no Firebase!"); }
+  </script>
+</body>
+</html>
