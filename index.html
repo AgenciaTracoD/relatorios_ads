@@ -1,22 +1,15 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="media/TracoD_New_Interno_Prancheta%201%20c%c3%b3pia%2012.png">
-  <title>Dashboard de Performance — Traço D</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/tabler-icons.min.css">
-  <style>
+<style>
     :root {
-      --bg-main: #121214;
-      --bg-card: #1e1e24;
-      --border-color: #2d2d35;
-      --text-main: #ebebeb;
-      --text-muted: #9ca3af;
-      --meta-color: #3b82f6;
-      --google-color: #ef4444;
-      --accent-gold: #f59e0b;
+      /* PALETA CORES DO SEU CALENDÁRIO */
+      --bg-main: #141419;        /* O mesmo fundo grafite escuro */
+      --bg-card: #1d1d24;        /* O tom dos cards internos */
+      --border-color: #2b2b35;   /* Bordas discretas */
+      --text-main: #ffffff;      /* Texto principal branco aceso */
+      --text-muted: #9ca3af;     /* Texto secundário cinza */
+      
+      /* CORES DAS PLATAFORMAS (Para dar o destaque certo) */
+      --meta-color: #3b82f6;     /* Azul clássico do Meta Ads */
+      --google-color: #f59e0b;   /* Amarelo/Dourado do Google Ads */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -24,7 +17,7 @@
 
     /* CABEÇALHO */
     .header {
-      background: #09090b;
+      background: #0d0d11;
       border-bottom: 1px solid var(--border-color);
       padding: 16px 24px;
       display: flex;
@@ -33,14 +26,14 @@
     }
     .header-logo { display: flex; align-items: center; gap: 12px; }
     .header-logo img { height: 35px; }
-    .header-title { font-size: 16px; font-weight: 600; letter-spacing: 0.5px; border-left: 2px solid var(--border-color); padding-left: 12px; }
+    .header-title { font-size: 16px; font-weight: 600; letter-spacing: 0.5px; border-left: 2px solid var(--border-color); padding-left: 12px; color: var(--text-main); }
     .period-badge { background: var(--bg-card); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 6px; font-size: 13px; color: var(--text-muted); }
 
     .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
 
     /* BRIEFING EXPLICATIVO (TEXTO DO TOPO) */
     .summary-box {
-      background: linear-gradient(135deg, #1e1e24 0%, #15151a 100%);
+      background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-left: 4px solid var(--meta-color);
       padding: 24px;
@@ -48,6 +41,7 @@
       margin-bottom: 32px;
       line-height: 1.6;
       font-size: 15px;
+      color: #e5e7eb;
     }
 
     .section-title {
@@ -73,15 +67,15 @@
     .demographics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
     @media (max-width: 600px) { .demographics-grid { grid-template-columns: 1fr; } }
     .card-demo { background: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: 8px; display: flex; align-items: center; gap: 20px; }
-    .demo-icon { font-size: 32px; color: var(--text-muted); background: #15151a; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+    .demo-icon { font-size: 32px; color: var(--text-muted); background: #141419; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
     .demo-info { flex-grow: 1; }
-    .demo-progress { background: #15151a; height: 6px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+    .demo-progress { background: #141419; height: 6px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
     .demo-bar { height: 100%; background: var(--meta-color); border-radius: 3px; }
 
     /* TABELA DE PERFORMANCE DE CRIATIVOS */
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto; margin-bottom: 32px; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 600px; }
-    th { background: #15151a; padding: 14px 20px; color: var(--text-muted); font-weight: 600; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
+    th { background: #0d0d11; padding: 14px 20px; color: var(--text-muted); font-weight: 600; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
     td { padding: 14px 20px; border-bottom: 1px solid var(--border-color); color: #fff; }
     tr:last-child td { border-bottom: none; }
     .creative-name { font-weight: 600; display: flex; align-items: center; gap: 8px; }
@@ -90,143 +84,9 @@
     /* LISTAS DE INSIGHTS (O QUE FUNCIONOU / ATENÇÃO) */
     .insight-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; margin-bottom: 16px; display: flex; gap: 14px; align-items: flex-start; }
     .insight-card.success { border-left: 4px solid #10b981; }
-    .insight-card.warning { border-left: 4px solid var(--accent-gold); }
+    .insight-card.warning { border-left: 4px solid var(--google-color); }
     .insight-card i { font-size: 20px; margin-top: 2px; }
     .insight-card.success i { color: #10b981; }
-    .insight-card.warning i { color: var(--accent-gold); }
+    .insight-card.warning i { color: var(--google-color); }
     .insight-text { font-size: 14px; line-height: 1.5; color: #e5e7eb; }
   </style>
-</head>
-<body>
-
-  <!-- HEADER -->
-  <div class="header">
-    <div class="header-logo">
-      <img src="media/TracoD_New_Interno_Prancheta%201%20c%c3%b3pia%2012.png" alt="Traço D">
-      <span class="header-title">Performance de Campanhas</span>
-    </div>
-    <div class="period-badge" id="report-period">19/03/2026 – 12/04/2026</div>
-  </div>
-
-  <div class="container">
-    
-    <!-- RESUMO DO GESTOR / BRIEFING -->
-    <div class="summary-box" id="report-briefing">
-      Em março e abril, investimos R$ 1.148,63 em anúncios e geramos 340 conversas via WhatsApp com pessoas interessadas nos produtos da Ditlanta. O custo médio por cada contato foi de apenas R$ 3,38 — um resultado excelente para o período da Feira. No total, mais de 24.500 pessoas foram impactadas pelos anúncios.
-    </div>
-
-    <!-- SEÇÃO: METRICAS GERAIS -->
-    <div class="section-title">Visão Geral da Campanha</div>
-    <div class="metrics-grid">
-      <div class="card-metric">
-        <div class="label">Investimento Total</div>
-        <div class="value" id="m-investimento">R$ 1.148</div>
-        <div class="sub">R$ 60/dia · campanha Feira</div>
-      </div>
-      <div class="card-metric">
-        <div class="label">Conversas no WhatsApp</div>
-        <div class="value" id="m-conversas" style="color: var(--meta-color);">340</div>
-        <div class="sub">Contatos gerados no período</div>
-      </div>
-      <div class="card-metric">
-        <div class="label">Custo por Conversa (CPL)</div>
-        <div class="value" id="m-cpc" style="color: #10b981;">R$ 3,38</div>
-        <div class="sub">Excelente para o nicho</div>
-      </div>
-    </div>
-
-    <div class="metrics-grid">
-      <div class="card-metric">
-        <div class="label">Pessoas Alcançadas</div>
-        <div class="value" id="m-alcance">24.541</div>
-        <div class="sub">Alcance único</div>
-      </div>
-      <div class="card-metric">
-        <div class="label">Impressões Totais</div>
-        <div class="value" id="m-impressoes">89.316</div>
-        <div class="sub">Exibições dos anúncios</div>
-      </div>
-      <div class="card-metric">
-        <div class="label">Visitas ao Perfil</div>
-        <div class="value" id="m-visitas">951</div>
-        <div class="sub">+195 novos seguidores</div>
-      </div>
-    </div>
-
-    <!-- SEÇÃO: DEMOGRAFIA -->
-    <div class="section-title">Público que mais respondeu</div>
-    <div class="demographics-grid">
-      <div class="card-demo">
-        <div class="demo-icon"><i class="ti ti-gender-female"></i></div>
-        <div class="demo-info">
-          <div style="font-size: 12px; color: var(--text-muted);">Mulheres</div>
-          <div style="font-size: 24px; font-weight: 700;">289 <span style="font-size: 13px; color: #10b981; font-weight: 400;">(85%)</span></div>
-          <div class="demo-progress"><div class="demo-bar" style="width: 85%; background: #10b981;"></div></div>
-        </div>
-      </div>
-      <div class="card-demo">
-        <div class="demo-icon"><i class="ti ti-gender-male"></i></div>
-        <div class="demo-info">
-          <div style="font-size: 12px; color: var(--text-muted);">Homens</div>
-          <div style="font-size: 24px; font-weight: 700;">51 <span style="font-size: 13px; color: var(--accent-gold); font-weight: 400;">(15%)</span></div>
-          <div class="demo-progress"><div class="demo-bar" style="width: 15%; background: var(--accent-gold);"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEÇÃO: PERFORMANCE DOS CRIATIVOS -->
-    <div class="section-title">Performance dos Criativos</div>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Anúncio</th>
-            <th style="text-align: right;">Conversas</th>
-            <th style="text-align: right;">Custo/Conv.</th>
-            <th style="text-align: right;">Impressões</th>
-          </tr>
-        </thead>
-        <tbody id="creatives-list">
-          <tr>
-            <td>
-              <div class="creative-name">Reels 03 — Teste <span class="badge-best">Melhor</span></div>
-              <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Reels · WhatsApp</div>
-            </td>
-            <td style="text-align: right; font-weight: 600; color: var(--meta-color);">128</td>
-            <td style="text-align: right;">R$ 2,16</td>
-            <td style="text-align: right; color: var(--text-muted);">23.048</td>
-          </tr>
-          <tr>
-            <td>
-              <div class="creative-name">Card 01</div>
-              <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Card · WhatsApp</div>
-            </td>
-            <td style="text-align: right; font-weight: 600; color: var(--meta-color);">89</td>
-            <td style="text-align: right;">R$ 3,77</td>
-            <td style="text-align: right; color: var(--text-muted);">24.177</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- SEÇÃO: ANÁLISE E INSIGHTS -->
-    <div class="section-title">O que funcionou bem</div>
-    <div class="insight-card success">
-      <i class="ti ti-circle-check"></i>
-      <div class="insight-text">Custo por conversa abaixo da média do mercado. O CPR de R$ 3,38 é excelente para campanhas de mensagens no Brasil — o mercado costuma girar entre R$ 6 e R$ 12 no mesmo formato.</div>
-    </div>
-    <div class="insight-card success">
-      <i class="ti ti-circle-check"></i>
-      <div class="insight-text">Reels como formato campeão. O criativo "Reels 03 — Teste" gerou 128 conversas a apenas R$ 2,16 cada, sendo o anúncio mais eficiente da campanha.</div>
-    </div>
-
-    <div class="section-title" style="margin-top: 32px;">Pontos de Atenção</div>
-    <div class="insight-card warning">
-      <i class="ti ti-alert-triangle"></i>
-      <div class="insight-text">Público feminino concentra a maioria dos contatos (85%). Vale explorar criativos e abordagens diferentes para ampliar a conversão entre o público masculino, que representou apenas 15% das conversas.</div>
-    </div>
-
-  </div>
-
-</body>
-</html>
