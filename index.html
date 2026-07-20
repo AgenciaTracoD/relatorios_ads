@@ -4,90 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="media/TracoD_New_Interno_Prancheta%201%20c%c3%b3pia%2012.png">
-  <title>Performance de Campanhas — Traço D</title>
+  <title>Performance de Campanhas</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/tabler-icons.min.css">
   <style>
     :root {
-      --bg-main: #141419;
-      --bg-card: #1d1d24;
-      --border-color: #2b2b35;
-      --text-main: #ffffff;
-      --text-muted: #9ca3af;
-      --meta-color: #3b82f6;
-      --google-color: #f59e0b;
+      --bg-main: #f9fafb;
+      --bg-card: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --accent: #6366f1; /* Roxo/Azul do modelo */
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+    body { background-color: var(--bg-main); color: var(--text-main); padding: 24px; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-    body { background-color: var(--bg-main); color: var(--text-main); padding-bottom: 60px; }
+    /* CABEÇALHO */
+    .header { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; background: white; padding: 16px; border-radius: 12px; box-shadow: var(--shadow); }
+    .header img { height: 28px; }
+    .header h1 { font-size: 18px; font-weight: 700; border-left: 2px solid #e5e7eb; padding-left: 12px; }
 
-    .header { background: #0d0d11; border-bottom: 1px solid var(--border-color); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
-    .header-logo { display: flex; align-items: center; gap: 12px; }
-    .header-logo img { height: 35px; }
-    .header-title { font-size: 16px; font-weight: 600; border-left: 2px solid var(--border-color); padding-left: 12px; }
-    .period-badge { background: var(--bg-card); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 6px; font-size: 13px; color: var(--text-muted); }
+    .container { max-width: 1200px; margin: 0 auto; }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
-    .summary-box { background: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--meta-color); padding: 24px; border-radius: 8px; margin-bottom: 32px; line-height: 1.6; font-size: 15px; color: #e5e7eb; }
-    
-    .section-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-    .section-title::before { content: ''; display: inline-block; width: 3px; height: 14px; background: var(--meta-color); border-radius: 2px; }
+    /* CARDS ESTILO MODELO */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 24px; }
+    .card { background: var(--bg-card); padding: 24px; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid #f3f4f6; }
+    .card-label { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+    .card-value { font-size: 28px; font-weight: 800; color: #111827; }
 
-    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
-    .card-metric { background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; }
-    .card-metric .label { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }
-    .card-metric .value { font-size: 26px; font-weight: 700; color: #fff; }
-    .card-metric .sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-
-    .demographics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
-    .card-demo { background: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: 8px; display: flex; align-items: center; gap: 20px; }
-    .demo-icon { font-size: 32px; color: var(--text-muted); background: #141419; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
-    .demo-progress { background: #141419; height: 6px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
-    .demo-bar { height: 100%; border-radius: 3px; }
-
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto; margin-bottom: 32px; }
-    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
-    th { background: #0d0d11; padding: 14px 20px; color: var(--text-muted); font-weight: 600; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
-    td { padding: 14px 20px; border-bottom: 1px solid var(--border-color); color: #fff; }
-    .badge-best { background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
-
-    .insight-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; margin-bottom: 16px; display: flex; gap: 14px; align-items: flex-start; }
-    .insight-card.success { border-left: 4px solid #10b981; }
-    .insight-card.warning { border-left: 4px solid var(--google-color); }
-    .insight-text { font-size: 14px; line-height: 1.5; color: #e5e7eb; }
+    /* TABELA */
+    .table-card { background: var(--bg-card); padding: 24px; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid #f3f4f6; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th { text-align: left; color: var(--text-muted); font-size: 12px; padding: 12px; border-bottom: 1px solid #f3f4f6; }
+    td { padding: 16px 12px; border-bottom: 1px solid #f3f4f6; font-weight: 500; }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <div class="header-logo">
-      <img src="media/TracoD_New_Interno_Prancheta%201%20c%c3%b3pia%2012.png" alt="Traço D">
-      <span class="header-title">Performance de Campanhas</span>
-    </div>
-    <div class="period-badge" id="report-period">19/03/2026 – 12/04/2026</div>
-  </div>
-
   <div class="container">
-    <div class="summary-box" id="report-briefing">Carregando relatório...</div>
-    
-    <div class="section-title">Visão Geral da Campanha</div>
-    <div class="metrics-grid">
-      <div class="card-metric"><div class="label">Investimento Total</div><div class="value" id="m-investimento">R$ 0</div></div>
-      <div class="card-metric"><div class="label">Conversas</div><div class="value" id="m-conversas">0</div></div>
-      <div class="card-metric"><div class="label">Custo por Conv.</div><div class="value" id="m-cpc">R$ 0,00</div></div>
+    <div class="header">
+      <img src="media/TracoD_New_Interno_Prancheta%201%20c%c3%b3pia%2012.png" alt="Logo">
+      <h1>Performance de Campanhas</h1>
     </div>
 
-    <div class="section-title">Performance dos Criativos</div>
-    <div class="table-container">
+    <div class="grid">
+      <div class="card">
+        <div class="card-label">Investimento Total</div>
+        <div class="card-value" id="m-investimento">R$ 0</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Conversas</div>
+        <div class="card-value" id="m-conversas">0</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Custo por Conv.</div>
+        <div class="card-value" id="m-cpc">R$ 0,00</div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <h2 style="font-size: 16px;">Performance dos Criativos</h2>
       <table>
-        <thead><tr><th>Anúncio</th><th style="text-align: right;">Conversas</th><th style="text-align: right;">Custo</th></tr></thead>
+        <thead><tr><th>ANÚNCIO</th><th>CONVERSAS</th><th>CUSTO</th></tr></thead>
         <tbody id="creatives-list"></tbody>
       </table>
     </div>
   </div>
 
-  <!-- FIREBASE SCRIPTS -->
   <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/script.js"></script>
 </body>
